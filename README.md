@@ -107,7 +107,7 @@ micro query go.micro.srv.auth Oauth2.Authorize '{"response_type": "code", "clien
 Get Token
 
 ```shell
-icro query go.micro.srv.auth Oauth2.Token '{"client_id": "asim", "client_secret": "foobar", "code": "cJMKdcx7iwAyhBLzNpmWQsSxpJOnuztB", "grant_type": "authorization_code", "redirect_uri": "https://foo.bar.com"}'
+micro query go.micro.srv.auth Oauth2.Token '{"client_id": "asim", "client_secret": "foobar", "code": "cJMKdcx7iwAyhBLzNpmWQsSxpJOnuztB", "grant_type": "authorization_code", "redirect_uri": "https://foo.bar.com"}'
 {
 	"token": {
 		"access_token": "V2swWmtsRm50WEtKSDhXSEtFdVlCNUo1WG5iTk9BYjh1dUVnT0JlOW9DS2FjWFg3c1FCaHBDbWFpaUhtQVUxUw==",
