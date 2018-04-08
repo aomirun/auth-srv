@@ -24,6 +24,11 @@ import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 
+import (
+	context "golang.org/x/net/context"
+	grpc "google.golang.org/grpc"
+)
+
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
@@ -349,6 +354,177 @@ func init() {
 	proto.RegisterType((*RevokeResponse)(nil), "go.micro.srv.auth.oauth2.RevokeResponse")
 	proto.RegisterType((*IntrospectRequest)(nil), "go.micro.srv.auth.oauth2.IntrospectRequest")
 	proto.RegisterType((*IntrospectResponse)(nil), "go.micro.srv.auth.oauth2.IntrospectResponse")
+}
+
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConn
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion4
+
+// Client API for Oauth2 service
+
+type Oauth2Client interface {
+	Authorize(ctx context.Context, in *AuthorizeRequest, opts ...grpc.CallOption) (*AuthorizeResponse, error)
+	Token(ctx context.Context, in *TokenRequest, opts ...grpc.CallOption) (*TokenResponse, error)
+	Revoke(ctx context.Context, in *RevokeRequest, opts ...grpc.CallOption) (*RevokeResponse, error)
+	Introspect(ctx context.Context, in *IntrospectRequest, opts ...grpc.CallOption) (*IntrospectResponse, error)
+}
+
+type oauth2Client struct {
+	cc *grpc.ClientConn
+}
+
+func NewOauth2Client(cc *grpc.ClientConn) Oauth2Client {
+	return &oauth2Client{cc}
+}
+
+func (c *oauth2Client) Authorize(ctx context.Context, in *AuthorizeRequest, opts ...grpc.CallOption) (*AuthorizeResponse, error) {
+	out := new(AuthorizeResponse)
+	err := grpc.Invoke(ctx, "/go.micro.srv.auth.oauth2.Oauth2/Authorize", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *oauth2Client) Token(ctx context.Context, in *TokenRequest, opts ...grpc.CallOption) (*TokenResponse, error) {
+	out := new(TokenResponse)
+	err := grpc.Invoke(ctx, "/go.micro.srv.auth.oauth2.Oauth2/Token", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *oauth2Client) Revoke(ctx context.Context, in *RevokeRequest, opts ...grpc.CallOption) (*RevokeResponse, error) {
+	out := new(RevokeResponse)
+	err := grpc.Invoke(ctx, "/go.micro.srv.auth.oauth2.Oauth2/Revoke", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *oauth2Client) Introspect(ctx context.Context, in *IntrospectRequest, opts ...grpc.CallOption) (*IntrospectResponse, error) {
+	out := new(IntrospectResponse)
+	err := grpc.Invoke(ctx, "/go.micro.srv.auth.oauth2.Oauth2/Introspect", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// Server API for Oauth2 service
+
+type Oauth2Server interface {
+	Authorize(context.Context, *AuthorizeRequest) (*AuthorizeResponse, error)
+	Token(context.Context, *TokenRequest) (*TokenResponse, error)
+	Revoke(context.Context, *RevokeRequest) (*RevokeResponse, error)
+	Introspect(context.Context, *IntrospectRequest) (*IntrospectResponse, error)
+}
+
+func RegisterOauth2Server(s *grpc.Server, srv Oauth2Server) {
+	s.RegisterService(&_Oauth2_serviceDesc, srv)
+}
+
+func _Oauth2_Authorize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AuthorizeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(Oauth2Server).Authorize(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/go.micro.srv.auth.oauth2.Oauth2/Authorize",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(Oauth2Server).Authorize(ctx, req.(*AuthorizeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Oauth2_Token_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(Oauth2Server).Token(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/go.micro.srv.auth.oauth2.Oauth2/Token",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(Oauth2Server).Token(ctx, req.(*TokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Oauth2_Revoke_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RevokeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(Oauth2Server).Revoke(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/go.micro.srv.auth.oauth2.Oauth2/Revoke",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(Oauth2Server).Revoke(ctx, req.(*RevokeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Oauth2_Introspect_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IntrospectRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(Oauth2Server).Introspect(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/go.micro.srv.auth.oauth2.Oauth2/Introspect",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(Oauth2Server).Introspect(ctx, req.(*IntrospectRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _Oauth2_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "go.micro.srv.auth.oauth2.Oauth2",
+	HandlerType: (*Oauth2Server)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Authorize",
+			Handler:    _Oauth2_Authorize_Handler,
+		},
+		{
+			MethodName: "Token",
+			Handler:    _Oauth2_Token_Handler,
+		},
+		{
+			MethodName: "Revoke",
+			Handler:    _Oauth2_Revoke_Handler,
+		},
+		{
+			MethodName: "Introspect",
+			Handler:    _Oauth2_Introspect_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "github.com/micro/auth-srv/proto/oauth2/oauth2.proto",
 }
 
 func init() {

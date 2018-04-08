@@ -50,7 +50,7 @@ var _ server.Option
 
 // Client API for Account service
 
-type AccountClient interface {
+type AccountService interface {
 	Read(ctx context.Context, in *ReadRequest, opts ...client.CallOption) (*ReadResponse, error)
 	Create(ctx context.Context, in *CreateRequest, opts ...client.CallOption) (*CreateResponse, error)
 	Update(ctx context.Context, in *UpdateRequest, opts ...client.CallOption) (*UpdateResponse, error)
@@ -58,25 +58,25 @@ type AccountClient interface {
 	Search(ctx context.Context, in *SearchRequest, opts ...client.CallOption) (*SearchResponse, error)
 }
 
-type accountClient struct {
+type accountService struct {
 	c           client.Client
 	serviceName string
 }
 
-func NewAccountClient(serviceName string, c client.Client) AccountClient {
+func AccountServiceClient(serviceName string, c client.Client) AccountService {
 	if c == nil {
 		c = client.NewClient()
 	}
 	if len(serviceName) == 0 {
 		serviceName = "go.micro.srv.auth.account"
 	}
-	return &accountClient{
+	return &accountService{
 		c:           c,
 		serviceName: serviceName,
 	}
 }
 
-func (c *accountClient) Read(ctx context.Context, in *ReadRequest, opts ...client.CallOption) (*ReadResponse, error) {
+func (c *accountService) Read(ctx context.Context, in *ReadRequest, opts ...client.CallOption) (*ReadResponse, error) {
 	req := c.c.NewRequest(c.serviceName, "Account.Read", in)
 	out := new(ReadResponse)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -86,7 +86,7 @@ func (c *accountClient) Read(ctx context.Context, in *ReadRequest, opts ...clien
 	return out, nil
 }
 
-func (c *accountClient) Create(ctx context.Context, in *CreateRequest, opts ...client.CallOption) (*CreateResponse, error) {
+func (c *accountService) Create(ctx context.Context, in *CreateRequest, opts ...client.CallOption) (*CreateResponse, error) {
 	req := c.c.NewRequest(c.serviceName, "Account.Create", in)
 	out := new(CreateResponse)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -96,7 +96,7 @@ func (c *accountClient) Create(ctx context.Context, in *CreateRequest, opts ...c
 	return out, nil
 }
 
-func (c *accountClient) Update(ctx context.Context, in *UpdateRequest, opts ...client.CallOption) (*UpdateResponse, error) {
+func (c *accountService) Update(ctx context.Context, in *UpdateRequest, opts ...client.CallOption) (*UpdateResponse, error) {
 	req := c.c.NewRequest(c.serviceName, "Account.Update", in)
 	out := new(UpdateResponse)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -106,7 +106,7 @@ func (c *accountClient) Update(ctx context.Context, in *UpdateRequest, opts ...c
 	return out, nil
 }
 
-func (c *accountClient) Delete(ctx context.Context, in *DeleteRequest, opts ...client.CallOption) (*DeleteResponse, error) {
+func (c *accountService) Delete(ctx context.Context, in *DeleteRequest, opts ...client.CallOption) (*DeleteResponse, error) {
 	req := c.c.NewRequest(c.serviceName, "Account.Delete", in)
 	out := new(DeleteResponse)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -116,7 +116,7 @@ func (c *accountClient) Delete(ctx context.Context, in *DeleteRequest, opts ...c
 	return out, nil
 }
 
-func (c *accountClient) Search(ctx context.Context, in *SearchRequest, opts ...client.CallOption) (*SearchResponse, error) {
+func (c *accountService) Search(ctx context.Context, in *SearchRequest, opts ...client.CallOption) (*SearchResponse, error) {
 	req := c.c.NewRequest(c.serviceName, "Account.Search", in)
 	out := new(SearchResponse)
 	err := c.c.Call(ctx, req, out, opts...)

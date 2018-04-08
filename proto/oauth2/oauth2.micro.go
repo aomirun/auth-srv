@@ -48,32 +48,32 @@ var _ server.Option
 
 // Client API for Oauth2 service
 
-type Oauth2Client interface {
+type Oauth2Service interface {
 	Authorize(ctx context.Context, in *AuthorizeRequest, opts ...client.CallOption) (*AuthorizeResponse, error)
 	Token(ctx context.Context, in *TokenRequest, opts ...client.CallOption) (*TokenResponse, error)
 	Revoke(ctx context.Context, in *RevokeRequest, opts ...client.CallOption) (*RevokeResponse, error)
 	Introspect(ctx context.Context, in *IntrospectRequest, opts ...client.CallOption) (*IntrospectResponse, error)
 }
 
-type oauth2Client struct {
+type oauth2Service struct {
 	c           client.Client
 	serviceName string
 }
 
-func NewOauth2Client(serviceName string, c client.Client) Oauth2Client {
+func Oauth2ServiceClient(serviceName string, c client.Client) Oauth2Service {
 	if c == nil {
 		c = client.NewClient()
 	}
 	if len(serviceName) == 0 {
 		serviceName = "go.micro.srv.auth.oauth2"
 	}
-	return &oauth2Client{
+	return &oauth2Service{
 		c:           c,
 		serviceName: serviceName,
 	}
 }
 
-func (c *oauth2Client) Authorize(ctx context.Context, in *AuthorizeRequest, opts ...client.CallOption) (*AuthorizeResponse, error) {
+func (c *oauth2Service) Authorize(ctx context.Context, in *AuthorizeRequest, opts ...client.CallOption) (*AuthorizeResponse, error) {
 	req := c.c.NewRequest(c.serviceName, "Oauth2.Authorize", in)
 	out := new(AuthorizeResponse)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -83,7 +83,7 @@ func (c *oauth2Client) Authorize(ctx context.Context, in *AuthorizeRequest, opts
 	return out, nil
 }
 
-func (c *oauth2Client) Token(ctx context.Context, in *TokenRequest, opts ...client.CallOption) (*TokenResponse, error) {
+func (c *oauth2Service) Token(ctx context.Context, in *TokenRequest, opts ...client.CallOption) (*TokenResponse, error) {
 	req := c.c.NewRequest(c.serviceName, "Oauth2.Token", in)
 	out := new(TokenResponse)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -93,7 +93,7 @@ func (c *oauth2Client) Token(ctx context.Context, in *TokenRequest, opts ...clie
 	return out, nil
 }
 
-func (c *oauth2Client) Revoke(ctx context.Context, in *RevokeRequest, opts ...client.CallOption) (*RevokeResponse, error) {
+func (c *oauth2Service) Revoke(ctx context.Context, in *RevokeRequest, opts ...client.CallOption) (*RevokeResponse, error) {
 	req := c.c.NewRequest(c.serviceName, "Oauth2.Revoke", in)
 	out := new(RevokeResponse)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -103,7 +103,7 @@ func (c *oauth2Client) Revoke(ctx context.Context, in *RevokeRequest, opts ...cl
 	return out, nil
 }
 
-func (c *oauth2Client) Introspect(ctx context.Context, in *IntrospectRequest, opts ...client.CallOption) (*IntrospectResponse, error) {
+func (c *oauth2Service) Introspect(ctx context.Context, in *IntrospectRequest, opts ...client.CallOption) (*IntrospectResponse, error) {
 	req := c.c.NewRequest(c.serviceName, "Oauth2.Introspect", in)
 	out := new(IntrospectResponse)
 	err := c.c.Call(ctx, req, out, opts...)
