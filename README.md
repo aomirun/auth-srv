@@ -41,7 +41,7 @@ Implemented security features
 4. Download and start the service
 
 	```shell
-	go get github.com/micro/auth-srv
+	go get github.com/microhq/auth-srv
 	auth-srv --database_url="root:root@tcp(192.168.99.100:3306)/auth"
 	```
 

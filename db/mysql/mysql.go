@@ -9,9 +9,9 @@ import (
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/micro/auth-srv/db"
-	account "github.com/micro/auth-srv/proto/account"
-	oauth2 "github.com/micro/auth-srv/proto/oauth2"
+	"github.com/microhq/auth-srv/db"
+	account "github.com/microhq/auth-srv/proto/account"
+	oauth2 "github.com/microhq/auth-srv/proto/oauth2"
 )
 
 var (

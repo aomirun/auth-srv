@@ -3,13 +3,13 @@ package main
 import (
 	"log"
 
-	"github.com/micro/auth-srv/db"
-	"github.com/micro/auth-srv/db/mysql"
-	"github.com/micro/auth-srv/handler"
-	account "github.com/micro/auth-srv/proto/account"
-	oauth2 "github.com/micro/auth-srv/proto/oauth2"
 	"github.com/micro/cli"
 	"github.com/micro/go-micro"
+	"github.com/microhq/auth-srv/db"
+	"github.com/microhq/auth-srv/db/mysql"
+	"github.com/microhq/auth-srv/handler"
+	account "github.com/microhq/auth-srv/proto/account"
+	oauth2 "github.com/microhq/auth-srv/proto/oauth2"
 )
 
 func main() {
