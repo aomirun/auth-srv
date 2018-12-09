@@ -70,13 +70,17 @@ Oauth2
 ### Account.Create
 
 ```shell
-micro query go.micro.srv.auth Account.Create '{"account": {"type": "user", "client_id": "asim", "client_secret": "foobar"}}'
+micro call go.micro.srv.auth Account.Create '{"account": {"type": "user", "client_id": "asim", "client_secret": "foobar"}}'
 ```
 
 ### Account.Search
 
 ```shell
-micro query go.micro.srv.auth Account.Search
+micro call go.micro.srv.auth Account.Search
+```
+Response:
+```shell
+
 {
 	"accounts": [
 		{
@@ -95,7 +99,10 @@ micro query go.micro.srv.auth Account.Search
 Authorization Code Flow
 
 ```shell
-micro query go.micro.srv.auth Oauth2.Authorize '{"response_type": "code", "client_id": "asim", "state": "mystatetoken", "redirect_uri": "https://foo.bar.com"}'
+micro call go.micro.srv.auth Oauth2.Authorize '{"response_type": "code", "client_id": "asim", "state": "mystatetoken", "redirect_uri": "https://foo.bar.com"}'
+```
+Response:
+```shell
 {
 	"code": "cJMKdcx7iwAyhBLzNpmWQsSxpJOnuztB",
 	"state": "mystatetoken"
@@ -107,7 +114,7 @@ micro query go.micro.srv.auth Oauth2.Authorize '{"response_type": "code", "clien
 Get Token
 
 ```shell
-micro query go.micro.srv.auth Oauth2.Token '{"client_id": "asim", "client_secret": "foobar", "code": "cJMKdcx7iwAyhBLzNpmWQsSxpJOnuztB", "grant_type": "authorization_code", "redirect_uri": "https://foo.bar.com"}'
+micro call go.micro.srv.auth Oauth2.Token '{"client_id": "asim", "client_secret": "foobar", "code": "cJMKdcx7iwAyhBLzNpmWQsSxpJOnuztB", "grant_type": "authorization_code", "redirect_uri": "https://foo.bar.com"}'
 {
 	"token": {
 		"access_token": "V2swWmtsRm50WEtKSDhXSEtFdVlCNUo1WG5iTk9BYjh1dUVnT0JlOW9DS2FjWFg3c1FCaHBDbWFpaUhtQVUxUw==",
@@ -124,6 +131,6 @@ micro query go.micro.srv.auth Oauth2.Token '{"client_id": "asim", "client_secret
 ### Oauth2.Revoke
 
 ```shell
-micro query go.micro.srv.auth Oauth2.Revoke '{"access_token": "V2swWmtsRm50WEtKSDhXSEtFdVlCNUo1WG5iTk9BYjh1dUVnT0JlOW9DS2FjWFg3c1FCaHBDbWFpaUhtQVUxUw=="}'
+micro call go.micro.srv.auth Oauth2.Revoke '{"access_token": "V2swWmtsRm50WEtKSDhXSEtFdVlCNUo1WG5iTk9BYjh1dUVnT0JlOW9DS2FjWFg3c1FCaHBDbWFpaUhtQVUxUw=="}'
 ```
 
